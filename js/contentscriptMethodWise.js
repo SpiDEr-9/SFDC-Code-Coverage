@@ -286,7 +286,7 @@ function init() {
             if(!isSlectAddec){
                 let divToAdd = document.getElementById("ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id27");
                 let div = document.createElement("div");
-                div.style = "margin-top: 1em; margin-bottom: 1em; position: sticky; top:0";
+                div.style = "margin-top: 1em; margin-bottom: 1em;     position: fixed; z-index: 100; background-color: white; margin-left : 1em;";
                 divToAdd.appendChild(div);
                 let selectElement = document.createElement("select");
                 selectElement.id = "methodNameSelect";
@@ -427,8 +427,12 @@ function initBtn(){
                             init();
                         };
                         // btn.onc .appendChild(document.createElement("button"))
-                        
-                    btn.style = "cursor: pointer; outline: 0; display: inline-block; font-weight: 400; line-height: 1.5; text-align: center; background-color: transparent; border: 1px solid transparent; padding: 6px 12px; font-size: 1rem; border-radius: .25rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; color: #0d6efd; border-color: #0d6efd; "
+                        btn.style = "margin-bottm : 2rem;"
+                    // btn.style = "display: inline-block; outline: 0; border: 0; cursor: pointer; background-color: #4299e1; border-radius: 4px; padding: 8px 16px; font-size: 16px; font-weight: 700; color: white; line-height: 26px;"
+                
+                    // btn.style = "display: inline-block; outline: none; cursor: pointer; padding: 0 16px; background-color: #0070d2; border-radius: 0.25rem; border: 1px solid #0070d2; color: #fff; font-size: 13px; line-height: 30px; font-weight: 400; text-align: center; :hover {     background-color: #005fb2;       border-color: #005fb2; } "
+                
+                    //btn.style = "cursor: pointer; outline: 0; display: inline-block; font-weight: 400; line-height: 1.5; text-align: center; background-color: transparent; border: 1px solid transparent; padding: 6px 12px; font-size: 1rem; border-radius: .25rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; color: #0d6efd; border-color: #0d6efd; "
                 
                         btn.innerHTML = "Show Coverage";
                         divToAdd.appendChild(btn);
