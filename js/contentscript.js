@@ -281,14 +281,14 @@ chrome.runtime.onMessage.addListener(function (e, t, i) {
 }),
   initBtn();
 function initBtn(){
-    let divToAdd = document.getElementById("ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id27")
-                        let btn = document.createElement("button");
-                        btn.onclick = function(e) {
-                            e.preventDefault();
-                            //console.log('bhush btn click------- ');
-                            initTotal();
-                        };
-                        // btn.onc .appendChild(document.createElement("button"))
-                        btn.innerHTML = "Show Coverage";
-                        divToAdd.appendChild(btn);
+    // let divToAdd = document.getElementById("ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id27")
+    //                     let btn = document.createElement("button");
+    //                     btn.onclick = function(e) {
+    //                         e.preventDefault();
+    //                         //console.log('bhush btn click------- ');
+    //                         initTotal();
+    //                     };
+    //                     // btn.onc .appendChild(document.createElement("button"))
+    //                     // btn.innerHTML = "Show Coverage";
+    //                     divToAdd.appendChild(btn);
 }

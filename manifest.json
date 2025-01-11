@@ -8,7 +8,7 @@
       "default_popup": "view/popup.html"
    },
    "content_scripts": [ {
-      "js": [ "js/jquery.js", "js/forcetk.js", "js/tinycon.js", "js/contentscript.js","js/contentscriptMethodWise.js" ],
+      "js": [ "js/jquery.js", "js/forcetk.js", "js/tinycon.js","js/contentscriptMethodWise.js" ],
       "matches": [ "https://*.salesforce.com/*", "https://*.force.com/*" ]
    } ],
    "description": "Shows the code coverage and code covered by each method induvidually",

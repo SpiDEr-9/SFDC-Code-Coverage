@@ -285,6 +285,9 @@ function init() {
             
             if(!isSlectAddec){
                 let divToAdd = document.getElementById("ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id27");
+                let div = document.createElement("div");
+                div.style = "margin-top: 1em; margin-bottom: 1em; position: sticky; top:0";
+                divToAdd.appendChild(div);
                 let selectElement = document.createElement("select");
                 selectElement.id = "methodNameSelect";
                 selectElement.style = "padding-left: 1em; border-radius: 5px; font-weight: 500; height: 2rem;";
@@ -296,7 +299,7 @@ function init() {
                     
                     
                 }
-                divToAdd.appendChild(selectElement);
+                div.appendChild(selectElement);
                 let option = document.createElement("option");
                     option.value = 'All Methods';
                     option.text = 'All Methods';
@@ -424,6 +427,9 @@ function initBtn(){
                             init();
                         };
                         // btn.onc .appendChild(document.createElement("button"))
-                        btn.innerHTML = "Spidy Cov";
+                        
+                    btn.style = "cursor: pointer; outline: 0; display: inline-block; font-weight: 400; line-height: 1.5; text-align: center; background-color: transparent; border: 1px solid transparent; padding: 6px 12px; font-size: 1rem; border-radius: .25rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; color: #0d6efd; border-color: #0d6efd; "
+                
+                        btn.innerHTML = "Show Coverage";
                         divToAdd.appendChild(btn);
 }
