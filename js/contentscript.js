@@ -4,9 +4,9 @@ var cookie,
   oldHtml = null,
   isCalled = 0;
 
-function init() {
+function initTotal() {
     // isCalled = 1;
-    console.log('init --- ');
+    //console.log('init --- ');
   chrome.storage.sync.get("toggle", function (e) {
     if (1 == 1) {
       initrun = !0;
@@ -18,10 +18,10 @@ function init() {
         allLines = [],
         s = [],
         h = getValueFromCookie("sid");
-        console.log('OUTPUT : ',allLines);
+        // //console.log('OUTPUT : ',allLines);
 
-        // console.log(' val  t--- '+t);
-    // console.log('init --- '+ d + ' r--- '+ r + ' g--- '+ g + ' c--- '+ c + ' a--- '+ a + ' s--- '+ s + ' h--- '+ h);
+        // //console.log(' val  t--- '+t);
+    // //console.log('init --- '+ d + ' r--- '+ r + ' g--- '+ g + ' c--- '+ c + ' a--- '+ a + ' s--- '+ s + ' h--- '+ h);
       if (
         (d = String(t).split("salesforce.com/")).length > 1 &&
         (String(d[1]).startsWith("01p") ||
@@ -55,20 +55,20 @@ function init() {
                 for (j = 0; j < h.length; j++)
                   -1 == totalCoveredLines.indexOf(String(h[j])) && totalCoveredLines.push(String(h[j]));
               }
-              console.log(' val  r--- '+totalCoveredLines);
+              //console.log(' val  r--- '+totalCoveredLines);
               
               for (k = 0; k < e[0].Coverage.coveredLines.length; k++)
                 actualCodeLines.push(String(e[0].Coverage.coveredLines[k]));
-              console.log(' val  c1--- '+actualCodeLines);
+              //console.log(' val  c1--- '+actualCodeLines);
               for (l = 0; l < e[0].Coverage.uncoveredLines.length; l++)
                 actualCodeLines.push(String(e[0].Coverage.uncoveredLines[l]));
-              console.log(' val  c2--- '+actualCodeLines);
+              //console.log(' val  c2--- '+actualCodeLines);
               for (m = 0; m < actualCodeLines.length; m++)
                 -1 == totalCoveredLines.indexOf(String(actualCodeLines[m])) &&
                   -1 == totalUnCoveredLines.indexOf(String(actualCodeLines[m])) &&
                   totalUnCoveredLines.push(String(actualCodeLines[m]));
 
-                  console.log(' val  g--- '+totalUnCoveredLines);
+                  //console.log(' val  g--- '+totalUnCoveredLines);
               if (
                 (d = String(t).split("salesforce.com/")).length > 1 &&
                 (String(d[1]).startsWith("01p") ||
@@ -121,9 +121,9 @@ function init() {
                 }
                 for (allLines = p.split("<br>"), n = 0; n < allLines.length; n++ ){
                     "" == allLines[n].trim && allLines.splice(n, 1);
-                    console.log('OUTPUT : allLines'+ n + '---'+allLines[n]);
+                    //console.log('OUTPUT : allLines'+ n + '---'+allLines[n]);
                 }
-                console.log('all lines len-->'+allLines.length);
+                //console.log('all lines len-->'+allLines.length);
                 
                 for (o = 0; o < allLines.length; o++)
                   -1 != totalCoveredLines.indexOf(String(o + 1)) // as code lines atrts from 1 not 0
@@ -186,7 +186,7 @@ function init() {
           u.send();
       }
     }
-    console.log('OUTPUT : after------',e.toggle);
+    //console.log('OUTPUT : after------',e.toggle);
   });
 }
 function getValueFromCookie(e) {
@@ -209,7 +209,7 @@ chrome.runtime.onMessage.addListener(function (e, t, i) {
       if (
         (1 == e.toggle &&
           (0 == initrun
-            ? init()
+            ? initTotal()
             : 1 == initrun &&
               null != currentinnerhtml &&
               (null !=
@@ -285,8 +285,8 @@ function initBtn(){
                         let btn = document.createElement("button");
                         btn.onclick = function(e) {
                             e.preventDefault();
-                            console.log('bhush btn click------- ');
-                            init();
+                            //console.log('bhush btn click------- ');
+                            initTotal();
                         };
                         // btn.onc .appendChild(document.createElement("button"))
                         btn.innerHTML = "Show Coverage";
