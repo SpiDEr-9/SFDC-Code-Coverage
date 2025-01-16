@@ -19,7 +19,7 @@
       "48": "icons/icon48.png"
    },
    "manifest_version": 3,
-   "name": "#A SF Code Coverage Viewer",
+   "name": "SF Code Coverage Extractor",
    "permissions": [ "storage" ],
    "version": "1.0.0"
 }
