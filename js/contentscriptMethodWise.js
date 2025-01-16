@@ -290,7 +290,7 @@ function init() {
                 divToAdd.appendChild(div);
                 let selectElement = document.createElement("select");
                 selectElement.id = "methodNameSelect";
-                selectElement.style = "padding-left: 1em; border-radius: 5px; font-weight: 500; height: 2rem;";
+                selectElement.style = "padding-left: 1em; border-radius: 5px; font-weight: 500; height: 2rem;color: white; background-image: linear-gradient(to right, #364152, #157d95);";
                 selectElement.onchange = function(e) {
                     let key = e.target.value;
                     // console.log('OUTPUT select change: ',key);
@@ -303,11 +303,13 @@ function init() {
                 let option = document.createElement("option");
                     option.value = 'All Methods';
                     option.text = 'All Methods';
+                    option.style ="color: white; background-color: #364152;"
                     selectElement.appendChild(option);
                 methodNameOptions.forEach(opt => {
                     let option = document.createElement("option");
                     option.value = opt;
                     option.text = opt;
+                    option.style ="color: white; background-color: #364152;"
                     selectElement.appendChild(option);
                 });
                 isSlectAddec = !0;
@@ -427,13 +429,16 @@ function initBtn(){
                             init();
                         };
                         // btn.onc .appendChild(document.createElement("button"))
-                        btn.style = "margin-bottm : 2rem;"
+                        //btn.style = "margin-bottm : 2rem;"
                     // btn.style = "display: inline-block; outline: 0; border: 0; cursor: pointer; background-color: #4299e1; border-radius: 4px; padding: 8px 16px; font-size: 16px; font-weight: 700; color: white; line-height: 26px;"
                 
                     // btn.style = "display: inline-block; outline: none; cursor: pointer; padding: 0 16px; background-color: #0070d2; border-radius: 0.25rem; border: 1px solid #0070d2; color: #fff; font-size: 13px; line-height: 30px; font-weight: 400; text-align: center; :hover {     background-color: #005fb2;       border-color: #005fb2; } "
                 
                     //btn.style = "cursor: pointer; outline: 0; display: inline-block; font-weight: 400; line-height: 1.5; text-align: center; background-color: transparent; border: 1px solid transparent; padding: 6px 12px; font-size: 1rem; border-radius: .25rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; color: #0d6efd; border-color: #0d6efd; "
-                
+                        
+                    
+                    // btn.style = "display: inline-block; outline: none; cursor: pointer; padding: 0 16px; background-color: #0070d2; border-radius: 0.25rem; border: 1px solid #0070d2; color: #fff; font-size: 13px; line-height: 30px; font-weight: 400; text-align: center;"
+                btn.style = "display: inline-block; outline: none; cursor: pointer; padding: 0px 16px; border-radius: 0.25rem; border: 1px solid rgb(0, 112, 210); font-size: 13px; line-height: 2em; text-align: center; background: #039BD5; color: white;"
                         btn.innerHTML = "Show Coverage";
                         divToAdd.appendChild(btn);
 }

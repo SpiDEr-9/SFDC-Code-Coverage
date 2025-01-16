@@ -1,15 +1,15 @@
 {
    "author": "Bhushan Mhatre",
    "background": {
-      "persistent": false,
-      "scripts": [ "js/background.js" ]
-   },
-   "browser_action": {
+      "service_worker":"js/background.js",
+      "type": "module"
+    },
+   "action": {
       "default_popup": "view/popup.html"
    },
    "content_scripts": [ {
       "js": [ "js/jquery.js", "js/forcetk.js", "js/tinycon.js","js/contentscriptMethodWise.js" ],
-      "matches": [ "https://*.salesforce.com/*", "https://*.force.com/*" ]
+      "matches": [ "https://*.salesforce.com/*", "https://*.force.com/*" ,"https://*.my.salesforce-setup.com/*"]
    } ],
    "description": "Shows the code coverage and code covered by each method induvidually",
    "icons": {
