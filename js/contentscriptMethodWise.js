@@ -5,207 +5,148 @@ var cookie,
   isCalled = 0,
   isSlectAddec = 0,
   d = [],
-        totalCoveredLines = [],
-        totalUnCoveredLines = [],
-        actualCodeLines = [],
-        allLines = [],
-        s = [];
-  const methodWiseCoveredLines = new Map();
-  const methodWiseUnCoveredLines = new Map();
-  const coveredLinesSet = new Set();
-  const unCoveredLinesSet = new Set();
+  totalCoveredLines = [],
+  totalUnCoveredLines = [],
+  actualCodeLines = [],
+  allLines = [],
+  s = [];
+const methodWiseCoveredLines = new Map();
+const methodWiseUnCoveredLines = new Map();
+const coveredLinesSet = new Set();
+const unCoveredLinesSet = new Set();
 
-  
-  
-  function handleTestMethodSelect(keyName) {
+function handleTestMethodSelect(keyName) {
+  if (keyName == "All Methods") {
+    showAllCoverage(totalCoveredLines, totalUnCoveredLines, false);
+  } else {
+    showAllCoverage(
+      methodWiseCoveredLines.get(keyName),
+      methodWiseUnCoveredLines.get(keyName),
+      true
+    );
+  }
+}
 
-    
-    // console.log('OUTPUT : handleTestMethodSelect-- ',methodWiseCoveredLines.get(keyName));
-    // console.log('OUTPUT : handleTestMethodSelect-- ',methodWiseUnCoveredLines.get(keyName));
+function showAllCoverage(covredLines, unCoveredLines, isString) {
+  let t = window.location;
 
-    if (keyName == 'All Methods') {
-        showAllCoverage(totalCoveredLines,totalUnCoveredLines,false);
-    }else{
-        showAllCoverage(methodWiseCoveredLines.get(keyName),methodWiseUnCoveredLines.get(keyName),true);
+  if (
+    (d = String(t).split("salesforce.com/")).length > 1 &&
+    (String(d[1]).startsWith("01p") ||
+      String(d[1]).startsWith("01q") ||
+      String(d[1]).includes("setup/build/viewApexClass.apexp") ||
+      String(d[1]).includes("setup/build/viewApexTrigger.apexp"))
+  ) {
+    let p;
+    if (isCalled == 0) {
+      isCalled = 1;
+      String(d[1]).startsWith("01p") ||
+      String(d[1]).includes("setup/build/viewApexClass.apexp")
+        ? (p = document.getElementById(
+            "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id70:j_id71:j_id74:0:j_id77"
+          ))
+          ? (p = document.getElementById(
+              "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id70:j_id71:j_id74:0:j_id77"
+            ).innerHTML)
+          : (p = document.getElementById(
+              "ApexClassViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id71"
+            )) &&
+            (p = document.getElementById(
+              "ApexClassViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id71"
+            ).innerHTML)
+        : (String(d[1]).startsWith("01q") ||
+            String(d[1]).includes("setup/build/viewApexTrigger.apexp")) &&
+          (null !=
+          document.getElementById(
+            "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:j_id78:j_id79:j_id82:0:j_id85"
+          )
+            ? (p = document.getElementById(
+                "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:j_id78:j_id79:j_id82:0:j_id85"
+              ).innerHTML)
+            : null !=
+                document.getElementById(
+                  "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id72"
+                ) &&
+              (p = document.getElementById(
+                "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id72"
+              ).innerHTML));
+      oldHtml = p;
+      p = String(p).replace(/&nbsp;/g, " ");
+    } else {
+      p = oldHtml;
+      p = String(p).replace(/&nbsp;/g, " ");
     }
+    allLines = [];
+    s = [];
+    for (allLines = p.split("<br>"), n = 0; n < allLines.length; n++) {
+      "" == allLines[n].trim && allLines.splice(n, 1);
+    }
+
+    for (o = 0; o < allLines.length; o++) {
+      let indexEle = o + 1;
+      if (covredLines.includes(indexEle)) {
+        // as code lines start from 1 not 0
+        s.push(
+          '<span style="background:#c0df94">' + allLines[o] + "</span><br>"
+        );
+      } else if (unCoveredLines.includes(indexEle)) {
+        // as code lines start from 1 not 0
+        s.push(
+          '<span style="background:#f08080">' + allLines[o] + "</span><br>"
+        );
+      } else {
+        s.push("<span>" + allLines[o] + "</span><br>");
+      }
+    }
+
+    String(d[1]).startsWith("01p") ||
+    String(d[1]).includes("setup/build/viewApexClass.apexp")
+      ? null !=
+        document.getElementById(
+          "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id70:j_id71:j_id74:0:j_id77"
+        )
+        ? ((document.getElementById(
+            "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id70:j_id71:j_id74:0:j_id77"
+          ).innerHTML = s.join("")),
+          (currentinnerhtml = s.join("")))
+        : null !=
+            document.getElementById(
+              "ApexClassViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id71"
+            ) &&
+          ((document.getElementById(
+            "ApexClassViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id71"
+          ).innerHTML = s.join("")),
+          (currentinnerhtml = s.join("")))
+      : (String(d[1]).startsWith("01q") ||
+          String(d[1]).includes("setup/build/viewApexTrigger.apexp")) &&
+        (null !=
+        document.getElementById(
+          "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:j_id78:j_id79:j_id82:0:j_id85"
+        )
+          ? ((document.getElementById(
+              "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:j_id78:j_id79:j_id82:0:j_id85"
+            ).innerHTML = s.join("")),
+            (currentinnerhtml = s.join("")))
+          : null !=
+              document.getElementById(
+                "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id72"
+              ) &&
+            ((document.getElementById(
+              "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id72"
+            ).innerHTML = s.join("")),
+            (currentinnerhtml = s.join(""))));
+  }
 }
-
-
-
-function showAllCoverage(covredLines,unCoveredLines,isString) {
-    console.log('check is arra---'+Array.isArray(covredLines)+ '    unco--- '+Array.isArray(unCoveredLines));
-    let t = window.location;
-    console.log('OUTPUT : showAllCoverage-- covredLines \n'+ covredLines);
-    console.log('OUTPUT : showAllCoverage-- uncov \n'+ unCoveredLines);
-    // console.log('OUTPUT : showAllCoverage-- called');
-  
-                
-                console.log('actualC Code lines---------'+ actualCodeLines.length);
-              if (
-                (d = String(t).split("salesforce.com/")).length > 1 &&
-                (String(d[1]).startsWith("01p") ||
-                  String(d[1]).startsWith("01q") ||
-                  String(d[1]).includes("setup/build/viewApexClass.apexp") ||
-                  String(d[1]).includes("setup/build/viewApexTrigger.apexp"))
-              ) {
-                console.log('inside 1st if---------');
-                
-                let p;
-                if(isCalled == 0){
-                    console.log('inside 2nd if---------');
-                    isCalled = 1;
-                    String(d[1]).startsWith("01p") ||
-                  String(d[1]).includes("setup/build/viewApexClass.apexp")
-                    ? (p = document.getElementById(
-                        "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id70:j_id71:j_id74:0:j_id77"
-                      ))
-                      ? (p = document.getElementById(
-                          "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id70:j_id71:j_id74:0:j_id77"
-                        ).innerHTML)
-                      : (p = document.getElementById(
-                          "ApexClassViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id71"
-                        )) &&
-                        (p = document.getElementById(
-                          "ApexClassViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id71"
-                        ).innerHTML)
-                    : (String(d[1]).startsWith("01q") ||
-                        String(d[1]).includes(
-                          "setup/build/viewApexTrigger.apexp"
-                        )) &&
-                      (null !=
-                      document.getElementById(
-                        "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:j_id78:j_id79:j_id82:0:j_id85"
-                      )
-                        ? (p = document.getElementById(
-                            "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:j_id78:j_id79:j_id82:0:j_id85"
-                          ).innerHTML)
-                        : null !=
-                            document.getElementById(
-                              "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id72"
-                            ) &&
-                          (p = document.getElementById(
-                            "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id72"
-                          ).innerHTML));
-                          oldHtml = p;
-                          p = String(p).replace(/&nbsp;/g, " ");
-                          
-                    console.log('inside 3rd if---------');
-
-                }else{
-                    
-                    console.log('/inside 4th if---------');
-                    p = oldHtml;
-                    p = String(p).replace(/&nbsp;/g, " ");
-
-                }
-                allLines = [];
-                s =[];
-                // console.log('inside 5th after else---------');
-                for (allLines = p.split("<br>"), n = 0; n < allLines.length; n++ ){
-                    "" == allLines[n].trim && allLines.splice(n, 1);
-                    // console.log('OUTPUT : allLines'+ n + '---'+allLines[n]);
-                }
-                // console.log('inside 555rd if allLines len---------'+allLines.length);
-                // console.log('inside 555rd if allLines len co---------'+totalCoveredLines);
-                // console.log('inside 555rd if allLines len uncov---------'+totalUnCoveredLines);
-                // console.log('all lines len-->'+allLines.length);
-                
-                // console.log('check type----'+typeof covredLines[0]);
-                // console.log('check type----'+typeof unCoveredLines[0]);
-                
-                
-                for (o = 0; o < allLines.length; o++){
-                    // console.log('inside for lines-------'+ String(o + 1));
-                    let indexEle = o + 1;
-                    // console.log('inside indexEle-------'+ indexEle + '   type--->' +typeof indexEle);
-                    
-                    // console.log('index---'+indexEle+'  inside cover  -------'+ covredLines.includes((indexEle))+'   inside uncover -------'+ unCoveredLines.includes((indexEle))+ '  end----');
-                    // console.log('inside UncovCoveredLines -------'+ (unCoveredLines.indexOf(indexEle) != -1));
-                if (covredLines.includes((indexEle))) { // as code lines start from 1 not 0
-                    // console.log('fuck this ss covred line----'+indexEle+' inline--'+allLines[o]);
-
-                    s.push(
-                        '<span style="background:#7cfc00">' +
-                        allLines[o] +
-                        "</span><br>"
-                    );
-                } else if (unCoveredLines.includes((indexEle))) { // as code lines start from 1 not 0
-                    // console.log('uncovred line'+indexEle+' inline--'+allLines[o]);
-                    
-                    s.push(
-                        '<span style="background:#f08080">' +
-                        allLines[o] +
-                        "</span><br>"
-                    );
-                } else {                    
-                    s.push("<span>" + allLines[o] + "</span><br>");
-                }
-                }
-                    // console.log('after for lines-------'+s);
-                    
-                String(d[1]).startsWith("01p") ||
-                String(d[1]).includes("setup/build/viewApexClass.apexp")
-                  ? null !=
-                    document.getElementById(
-                      "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id70:j_id71:j_id74:0:j_id77"
-                    )
-                    ? ((document.getElementById(
-                        "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id70:j_id71:j_id74:0:j_id77"
-                      ).innerHTML = s.join("")),
-                      (currentinnerhtml = s.join("")))
-                    : null !=
-                        document.getElementById(
-                          "ApexClassViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id71"
-                        ) &&
-                      ((document.getElementById(
-                        "ApexClassViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id71"
-                      ).innerHTML = s.join("")),
-                      (currentinnerhtml = s.join("")))
-                  : (String(d[1]).startsWith("01q") ||
-                      String(d[1]).includes(
-                        "setup/build/viewApexTrigger.apexp"
-                      )) &&
-                    (null !=
-                    document.getElementById(
-                      "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:j_id78:j_id79:j_id82:0:j_id85"
-                    )
-                      ? ((document.getElementById(
-                          "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:j_id78:j_id79:j_id82:0:j_id85"
-                        ).innerHTML = s.join("")),
-                        (currentinnerhtml = s.join("")))
-                      : null !=
-                          document.getElementById(
-                            "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id72"
-                          ) &&
-                        ((document.getElementById(
-                          "ApexTriggerViewPage:theTemplate:theForm:thePageBlock:codeBlock:codeBlockItem:codeTable:0:j_id72"
-                        ).innerHTML = s.join("")),
-                        (currentinnerhtml = s.join(""))));
-              
-                        // console.log('OUTPUT : showAllCoverage-- end \n'+ s);
-                        
-
-                    }
-}
-
-
-  
 
 function init() {
+  let methodNameOptions = [];
 
-    let methodNameOptions = [];
-    // isCalled = 1;
-    // console.log('init --- ');
   chrome.storage.sync.get("toggle", function (e) {
     if (1 == 1) {
       initrun = !0;
       let t = window.location,
-        
         h = getValueFromCookie("sid");
-        // console.log('OUTPUT : ',allLines);
 
-        // console.log(' val  t--- '+t);
-    // console.log('init --- '+ d + ' r--- '+ r + ' g--- '+ g + ' c--- '+ c + ' a--- '+ a + ' s--- '+ s + ' h--- '+ h);
       if (
         (d = String(t).split("salesforce.com/")).length > 1 &&
         (String(d[1]).startsWith("01p") ||
@@ -226,14 +167,13 @@ function init() {
           d[0] +
             "salesforce.com/services/data/v39.0/tooling/query?q=select+id,ApexClassOrTrigger.name,TestMethodName,ApexTestClass.Name,NumLinesCovered,NumLinesUncovered,Coverage+from+ApexCodeCoverage+where+ApexClassOrTriggerId='" +
             p +
-            "'"+ " order+by+ApexTestClass.name",
+            "'" +
+            " order+by+ApexTestClass.name",
           !0
         ),
           u.setRequestHeader("Authorization", "Bearer " + h),
           (u.onreadystatechange = function () {
             if (4 == this.readyState && 200 == this.status) {
-                // console.log('OUTPUT : bdm----> \n',JSON.parse(u.responseText));
-                // console.log('OUTPUT : spidy----> \n',JSON.parse(u.responseText).records);
               var e = JSON.parse(u.responseText).records;
 
               let dummyUncoveredLines = [];
@@ -244,89 +184,73 @@ function init() {
                 let coveredLines = e[i].Coverage.coveredLines;
                 let UncoveredLines = e[i].Coverage.uncoveredLines;
                 let ApexTestClass = e[i].ApexTestClass.Name;
-                let classMethodName = ApexTestClass + '.' + methodName;
-                // console.log('coveredLines---'+ classMethodName+' --- lines \n'+coveredLines);
-                
+                let classMethodName = ApexTestClass + "." + methodName;
+
                 methodNameOptions.push(classMethodName);
-                methodWiseCoveredLines.set(classMethodName,coveredLines);
-                methodWiseUnCoveredLines.set(classMethodName,UncoveredLines);
+                methodWiseCoveredLines.set(classMethodName, coveredLines);
+                methodWiseUnCoveredLines.set(classMethodName, UncoveredLines);
                 dummyCoveredLines = [...dummyCoveredLines, ...coveredLines];
-                dummyUncoveredLines = [...dummyUncoveredLines, ...UncoveredLines];
-
-                //console.log('OUTPUT : bdm----> \n',classMethodName,methodName,ApexTestClass,coveredLines);
-              
-            }
-            dummyCoveredLines.sort((a, b) => a - b);
-            dummyCoveredLines.forEach((line) => {
+                dummyUncoveredLines = [
+                  ...dummyUncoveredLines,
+                  ...UncoveredLines,
+                ];
+              }
+              dummyCoveredLines.sort((a, b) => a - b);
+              dummyCoveredLines.forEach((line) => {
                 coveredLinesSet.add(line);
-            });
-            // console.log('dummyUncoveredLines----=>',dummyUncoveredLines);
-            
-            dummyUncoveredLines.sort((a, b) => a - b);
-            dummyUncoveredLines.forEach((line) => {
-                if(!coveredLinesSet.has(line)){
-                    unCoveredLinesSet.add(line);
+              });
+
+              dummyUncoveredLines.sort((a, b) => a - b);
+              dummyUncoveredLines.forEach((line) => {
+                if (!coveredLinesSet.has(line)) {
+                  unCoveredLinesSet.add(line);
                 }
-            });
+              });
 
+              totalCoveredLines = [...coveredLinesSet];
+              totalUnCoveredLines = [...unCoveredLinesSet];
+              actualCodeLines = [...actualCodeLines, ...totalCoveredLines];
+              actualCodeLines = [...actualCodeLines, ...totalUnCoveredLines];
+              actualCodeLines.sort((a, b) => a - b);
 
+              showAllCoverage(totalCoveredLines, totalUnCoveredLines, false);
 
-            // console.log('OUTPUT : bdm total covred----> \n'+totalCoveredLines+'  unCoveredLines->'+totalUnCoveredLines);
-            // console.log('OUTPUT : bdm total covred----> \n',coveredLinesSet);
-            // console.log('\nOUTPUT : bdm total uncovred----> \n',unCoveredLinesSet);
-            totalCoveredLines = [...coveredLinesSet];
-            totalUnCoveredLines = [...unCoveredLinesSet];
-            actualCodeLines = [...actualCodeLines, ...totalCoveredLines];
-            actualCodeLines = [...actualCodeLines, ...totalUnCoveredLines];
-            actualCodeLines.sort((a, b) => a - b);
-            // console.log('OUTPUT : bdm total covred----> \n'+totalCoveredLines+'\n  unCoveredLines->'+totalUnCoveredLines);
-            // console.log('OUTPUT : bdm total covred----> \n'+totalCoveredLines.length+'\n  unCoveredLines->'+totalUnCoveredLines.length);
-            showAllCoverage(totalCoveredLines,totalUnCoveredLines,false);
-            
-            if(!isSlectAddec){
-                let divToAdd = document.getElementById("ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id27");
+              if (!isSlectAddec) {
+                let divToAdd = document.getElementById(
+                  "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id27"
+                );
                 let div = document.createElement("div");
-                div.style = "margin-top: 1em; margin-bottom: 1em;     position: fixed; z-index: 100; background-color: white; margin-left : 1em;";
+                div.style =
+                  "margin-top: 1em; margin-bottom: 1em;     position: fixed; z-index: 100; background-color: white; margin-left : 1em;";
                 divToAdd.appendChild(div);
                 let selectElement = document.createElement("select");
                 selectElement.id = "methodNameSelect";
-                selectElement.style = "padding-left: 1em; border-radius: 5px; font-weight: 500; height: 2rem;color: white; background-image: linear-gradient(to right, #364152, #157d95);";
-                selectElement.onchange = function(e) {
-                    let key = e.target.value;
-                    // console.log('OUTPUT select change: ',key);
-                    handleTestMethodSelect(key);
-                    // console.log('cov lines select method---'+ methodWiseCoveredLines.get(key));
-                    
-                    
-                }
+                selectElement.style =
+                  "padding-left: 1em; border-radius: 5px; font-weight: 500; height: 2rem;color: white; background-image: linear-gradient(to right, #364152, #157d95);";
+                selectElement.onchange = function (e) {
+                  let key = e.target.value;
+                  handleTestMethodSelect(key);
+                };
                 div.appendChild(selectElement);
                 let option = document.createElement("option");
-                    option.value = 'All Methods';
-                    option.text = 'All Methods';
-                    option.style ="color: white; background-color: #364152;"
-                    selectElement.appendChild(option);
-                methodNameOptions.forEach(opt => {
-                    let option = document.createElement("option");
-                    option.value = opt;
-                    option.text = opt;
-                    option.style ="color: white; background-color: #364152;"
-                    selectElement.appendChild(option);
+                option.value = "All Methods";
+                option.text = "All Methods";
+                option.style = "color: white; background-color: #364152;";
+                selectElement.appendChild(option);
+                methodNameOptions.forEach((opt) => {
+                  let option = document.createElement("option");
+                  option.value = opt;
+                  option.text = opt;
+                  option.style = "color: white; background-color: #364152;";
+                  selectElement.appendChild(option);
                 });
                 isSlectAddec = !0;
-            }
-            // divToAdd.appendChild(selectElement);
-                        
-            // console.log('name options---->',methodNameOptions);
-            
-            // console.log('after map---->',methodWiseCoveredLines);
-            
-              
+              }
             }
           }),
           u.send();
       }
     }
-    // console.log('OUTPUT : after------',e.toggle);
   });
 }
 function getValueFromCookie(e) {
@@ -420,25 +344,17 @@ chrome.runtime.onMessage.addListener(function (e, t, i) {
     });
 }),
   initBtn();
-function initBtn(){
-    let divToAdd = document.getElementById("ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id27")
-                        let btn = document.createElement("button");
-                        btn.onclick = function(e) {
-                            e.preventDefault();
-                            console.log('bhush btn click------- ');
-                            init();
-                        };
-                        // btn.onc .appendChild(document.createElement("button"))
-                        //btn.style = "margin-bottm : 2rem;"
-                    // btn.style = "display: inline-block; outline: 0; border: 0; cursor: pointer; background-color: #4299e1; border-radius: 4px; padding: 8px 16px; font-size: 16px; font-weight: 700; color: white; line-height: 26px;"
-                
-                    // btn.style = "display: inline-block; outline: none; cursor: pointer; padding: 0 16px; background-color: #0070d2; border-radius: 0.25rem; border: 1px solid #0070d2; color: #fff; font-size: 13px; line-height: 30px; font-weight: 400; text-align: center; :hover {     background-color: #005fb2;       border-color: #005fb2; } "
-                
-                    //btn.style = "cursor: pointer; outline: 0; display: inline-block; font-weight: 400; line-height: 1.5; text-align: center; background-color: transparent; border: 1px solid transparent; padding: 6px 12px; font-size: 1rem; border-radius: .25rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; color: #0d6efd; border-color: #0d6efd; "
-                        
-                    
-                    // btn.style = "display: inline-block; outline: none; cursor: pointer; padding: 0 16px; background-color: #0070d2; border-radius: 0.25rem; border: 1px solid #0070d2; color: #fff; font-size: 13px; line-height: 30px; font-weight: 400; text-align: center;"
-                btn.style = "display: inline-block; outline: none; cursor: pointer; padding: 0px 16px; border-radius: 0.25rem; border: 1px solid rgb(0, 112, 210); font-size: 13px; line-height: 2em; text-align: center; background: #039BD5; color: white;"
-                        btn.innerHTML = "Show Coverage";
-                        divToAdd.appendChild(btn);
+function initBtn() {
+  let divToAdd = document.getElementById(
+    "ApexClassViewPage:theTemplate:theForm:thePageBlock:j_id27"
+  );
+  let btn = document.createElement("button");
+  btn.onclick = function (e) {
+    e.preventDefault();
+    init();
+  };
+  btn.style =
+    "display: inline-block; outline: none; cursor: pointer; padding: 0px 16px; border-radius: 0.25rem; border: 1px solid rgb(0, 112, 210); font-size: 13px; line-height: 2em; text-align: center; background: #039BD5; color: white;";
+  btn.innerHTML = "Show Coverage";
+  divToAdd.appendChild(btn);
 }
